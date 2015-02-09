@@ -1,5 +1,6 @@
+[![build status](https://travis-ci.org/PlexRay/nmcpp.svg)](https://travis-ci.org/PlexRay/nmcpp)
 
-### Namecoin Data Processing Library
+## Namecoin Data Processing Library
 
 The Namecoin Data Processor Library allows to simplify access to the 
 [Namecoin] (http://namecoin.info), as well as other [Namecoin Data] (NameData) 
