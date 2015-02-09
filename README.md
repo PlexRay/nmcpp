@@ -1,4 +1,18 @@
-The MIT License (MIT)
+
+### Namecoin Data Processing Library
+
+The Namecoin Data Processor Library allows to simplify access to the 
+[Namecoin] (http://namecoin.info), as well as other [Namecoin Data] (NameData) 
+providers. It was developed primarily for the Namecoin access, but has been 
+extended to support any data provider whose data conforms 
+[Namecoin Data specifications] (http://dot-bit.org/Namespace:Domain_names_v2.0). 
+The library supports imports, delegates, aliasing and other features of the Namecoin Data, 
+cross-references between Data Providers. The library discovers data inconsistency, 
+including circular references.
+
+For more information see: [https://dnschain.info/] (https://dnschain.info/)
+
+### The MIT License (MIT)
 
 Copyright (c) 2014-2015 PlexRay, Inc.
 
