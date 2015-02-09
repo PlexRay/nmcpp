@@ -42,7 +42,8 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["nonexistent"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
 
             results
                 .should.be.instanceof(Array).and
@@ -65,7 +66,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["ip"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -88,7 +91,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["ip", "ip6"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(2)
@@ -117,7 +122,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["ip"], {
             domain: "www.domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -148,7 +155,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["ip"], {
             domain: "www.dev.domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -184,7 +193,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["ip#www", "ip6#ftp"], {
             domain: "dev.domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(2)
@@ -213,7 +224,10 @@ describe('[0004] Find', function() {
         nmcpp.resolve(["fpr.gpg"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -236,7 +250,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve([""], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -269,7 +285,9 @@ describe('[0004] Find', function() {
         nmcpp.resolve([""], {
             domain: "www.domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)

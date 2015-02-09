@@ -99,14 +99,14 @@ var ImportsProvider = nmcpp.Provider.extend({
 
 describe('[0100] Bigdata', function() {
 
-    it.skip('[0000] 1k delegates', function(done) {
+    it('[0000] 1k delegates', function(done) {
         this.timeout(60 * 500)
         try {
             var debug = require('debug')('nmcpp:test-0100-0000')
 
             new DelegatesProvider(nmcpp, 'bit', debug, 1000)
 
-            nmcpp.lookup("ip#ftp", {
+            nmcpp.resolve("ip#ftp", {
                 domain: 'bigdata.bit',
                 debug: debug
             }, function(err, res) {
@@ -123,14 +123,14 @@ describe('[0100] Bigdata', function() {
         }
     })
 
-    it.skip('[0020] 5k delegates', function(done) {
+    it('[0020] 5k delegates', function(done) {
         this.timeout(60 * 1000)
         try {
             var debug = require('debug')('nmcpp:test-0100-0020')
 
             new DelegatesProvider(nmcpp, 'bit', debug, 5000)
 
-            nmcpp.lookup("ip#ftp", {
+            nmcpp.resolve("ip#ftp", {
                 domain: 'bigdata.bit',
                 debug: debug
             }, function(err, res) {
@@ -147,7 +147,7 @@ describe('[0100] Bigdata', function() {
         }
     })
 
-    it.skip('[0040] 1k imports', function(done) {
+    it('[0040] 1k imports', function(done) {
         this.timeout(60 * 500)
         try {
             var debug = require('debug')('nmcpp:test-0100-0040')
@@ -157,7 +157,7 @@ describe('[0100] Bigdata', function() {
                     return value
                 })
 
-            nmcpp.lookup("text", {
+            nmcpp.resolve("text", {
                 domain: 'bigdata.bit',
                 debug: debug
             }, function(err, res) {
@@ -172,7 +172,7 @@ describe('[0100] Bigdata', function() {
         }
     })
 
-    it.skip('[0060] 5k imports', function(done) {
+    it('[0060] 5k imports', function(done) {
         this.timeout(60 * 500)
         try {
             var debug = require('debug')('nmcpp:test-0100-0060')
@@ -182,7 +182,7 @@ describe('[0100] Bigdata', function() {
                     return value
                 })
 
-            nmcpp.lookup("text", {
+            nmcpp.resolve("text", {
                 domain: 'bigdata.bit',
                 debug: debug
             }, function(err, res) {

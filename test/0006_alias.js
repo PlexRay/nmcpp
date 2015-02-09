@@ -46,7 +46,9 @@ describe('[0006] Alias', function() {
             nmcpp.resolve(["ip#us"], {
                 domain: "domain.bit",
                 debug: bit.debug
-            }, function(results) {
+            }, function(err, results) {
+                if (err) { return done(err) }
+                
                 results
                     .should.be.instanceof(Array).and
                     .have.lengthOf(1)
@@ -86,7 +88,9 @@ describe('[0006] Alias', function() {
             nmcpp.resolve(["ip#www.eu"], {
                 domain: "domain.bit",
                 debug: bit.debug
-            }, function(results) {
+            }, function(err, results) {
+                if (err) { return done(err) }
+                
                 results
                     .should.be.instanceof(Array).and
                     .have.lengthOf(1)
@@ -129,7 +133,9 @@ describe('[0006] Alias', function() {
             nmcpp.resolve(["ip#www.eu"], {
                 domain: "domain.bit",
                 debug: bit.debug
-            }, function(results) {
+            }, function(err, results) {
+                if (err) { return done(err) }
+                
                 results
                     .should.be.instanceof(Array).and
                     .have.lengthOf(1)
@@ -192,7 +198,9 @@ describe('[0006] Alias', function() {
             nmcpp.resolve(["ip#www.eu"], {
                 domain: "domain.bit",
                 debug: debug
-            }, function(results) {
+            }, function(err, results) {
+                if (err) { return done(err) }
+                
                 results
                     .should.be.instanceof(Array).and
                     .have.lengthOf(1)
@@ -274,7 +282,9 @@ describe('[0006] Alias', function() {
             nmcpp.resolve(["ip#coin.eu"], {
                 domain: "domain.bit",
                 debug: bit.debug
-            }, function(results) {
+            }, function(err, results) {
+                if (err) { return done(err) }
+                
                 results
                     .should.be.instanceof(Array).and
                     .have.lengthOf(1)

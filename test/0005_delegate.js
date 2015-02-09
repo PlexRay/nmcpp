@@ -46,7 +46,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip#ftp"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -80,7 +82,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip#ftp"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -116,7 +120,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip.v4#ftp"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -155,7 +161,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip6.v6#ftp"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(1)
@@ -184,7 +192,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip", "ip#ftp"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(2)
@@ -221,7 +231,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip", "ip#www"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(2)
@@ -264,7 +276,9 @@ describe('[0005] Delegation', function() {
         nmcpp.resolve(["ip", "ip#ftp", "ip#www"], {
             domain: "domain.bit",
             debug: bit.debug
-        }, function(results) {
+        }, function(err, results) {
+            if (err) { return done(err) }
+            
             results
                 .should.be.instanceof(Array).and
                 .have.lengthOf(3)

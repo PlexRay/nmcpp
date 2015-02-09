@@ -32,7 +32,7 @@ var Namecoin = nmcpp.Provider.extend({
 
 describe('[0090] Examples', function() {
 
-    it('[0000] Simple resolve', function(done) {
+    it('[0000] Simple resolving', function(done) {
         var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0000'), {
             "d/domain": {
                 "map": {
@@ -43,7 +43,7 @@ describe('[0090] Examples', function() {
             }
         })
 
-        nmcpp.lookup('ip#www.domain.bit', {
+        nmcpp.resolve('ip#www.domain.bit', {
             debug: bit.debug
         }, function(err, res) {
             if (err) { return done(err) }
@@ -54,7 +54,7 @@ describe('[0090] Examples', function() {
         })
     })
     
-    it('[0020] Simple resolve with custom options', function(done) {
+    it('[0020] Simple resolving with custom options', function(done) {
         var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0020'), {
             "d/domain": {
                 "map": {
@@ -65,7 +65,7 @@ describe('[0090] Examples', function() {
             }
         })
 
-        nmcpp.lookup('ip', {
+        nmcpp.resolve('ip', {
             domain: "www.domain.bit",
             debug: bit.debug
         }, function(err, res) {
@@ -77,7 +77,7 @@ describe('[0090] Examples', function() {
         })
     })
     
-    it('[0090] Lookup domain + access data directly', function(done) {
+    it('[0090] Resolve a domain + access data directly', function(done) {
         var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0000'), {
             "d/domain": {
                 "map": {
@@ -88,7 +88,7 @@ describe('[0090] Examples', function() {
             }
         })
 
-        nmcpp.lookup('', {
+        nmcpp.resolve('', {
             domain: "www.domain.bit",
             debug: bit.debug
         }, function(err, res) {
@@ -106,7 +106,7 @@ describe('[0090] Examples', function() {
         })
     })
     
-    it('[0100] Lookup domain + lookup several records', function(done) {
+    it('[0100] Resolve a domain + lookup several records', function(done) {
         var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0100'), {
             "d/domain": {
                 "map": {
@@ -120,7 +120,7 @@ describe('[0090] Examples', function() {
             }
         })
 
-        nmcpp.lookup('', {
+        nmcpp.resolve('', {
             domain: 'www.domain.bit',
             debug: bit.debug
         }, function(err, res) {
