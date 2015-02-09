@@ -1,7 +1,7 @@
 {
     "name": "nmcpp",
     "description": "Namecoin Data Processing Library",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": false,
     "main": "./lib/index.js",
     "author": {

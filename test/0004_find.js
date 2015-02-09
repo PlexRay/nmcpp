@@ -7,6 +7,8 @@ var test = global.unitjs || require('unit.js'),
     should = test.should
 
 var _ = require("underscore")
+var async = require('async')
+
 var nmcpp = require('../lib/index.js')
 
 var Namecoin = nmcpp.Provider.extend({

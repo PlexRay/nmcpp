@@ -36,7 +36,7 @@ var defaultTimeout = 2 * 60 * 1000
 
 describe('[0200] Performance', function() {
 
-    it('[0000] Empty async loop // 100k', function(done) {
+    it.skip('[0000] Empty async loop // 100k', function(done) {
         this.timeout(defaultTimeout)
 
         var count = 100 * 1000
@@ -56,7 +56,7 @@ describe('[0200] Performance', function() {
         )
     })
 
-    it('[0020] find(["ip"], "domain.bit", done) // 10k', function(done) {
+    it.skip('[0020] find(["ip"], "domain.bit", done) // 10k', function(done) {
         this.timeout(defaultTimeout)
 
         var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0200-0020'), {
@@ -91,7 +91,7 @@ describe('[0200] Performance', function() {
         )
     })
 
-    it('[0040] find(["ip"], "www.eu.domain.bit", done) // 10k', function(done) {
+    it.skip('[0040] find(["ip"], "www.eu.domain.bit", done) // 10k', function(done) {
         this.timeout(defaultTimeout)
 
         var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0200-0020'), {

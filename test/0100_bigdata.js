@@ -99,7 +99,7 @@ var ImportsProvider = nmcpp.Provider.extend({
 
 describe('[0100] Bigdata', function() {
 
-    it('[0000] 1k delegates', function(done) {
+    it.skip('[0000] 1k delegates', function(done) {
         this.timeout(60 * 500)
         try {
             var debug = require('debug')('nmcpp:test-0100-0000')
@@ -123,7 +123,7 @@ describe('[0100] Bigdata', function() {
         }
     })
 
-    it('[0020] 5k delegates', function(done) {
+    it.skip('[0020] 5k delegates', function(done) {
         this.timeout(60 * 1000)
         try {
             var debug = require('debug')('nmcpp:test-0100-0020')
@@ -147,7 +147,7 @@ describe('[0100] Bigdata', function() {
         }
     })
 
-    it('[0040] 1k imports', function(done) {
+    it.skip('[0040] 1k imports', function(done) {
         this.timeout(60 * 500)
         try {
             var debug = require('debug')('nmcpp:test-0100-0040')
@@ -172,7 +172,7 @@ describe('[0100] Bigdata', function() {
         }
     })
 
-    it('[0060] 5k imports', function(done) {
+    it.skip('[0060] 5k imports', function(done) {
         this.timeout(60 * 500)
         try {
             var debug = require('debug')('nmcpp:test-0100-0060')
