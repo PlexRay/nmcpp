@@ -8,28 +8,14 @@ var test = global.unitjs || require('unit.js'),
 
 var _ = require("underscore")
 var nmcpp = require('../lib/index.js')
-var resolver = new nmcpp.Resolver()
 
 /* Tests
 ============================================================================= */
 
-var TestProvider = nmcpp.Provider.extend({
-    init: function(debug, data) {
-        this.debug = debug
-        this.data = data
-    },
-    load: function(name, callback) {
-        if (this.data.hasOwnProperty(name)) {
-            this.debug('Returning data...')
-            callback(null, _.clone(this.data[name]))
-        } else {
-            this.debug('Returning not found...')
-            return callback(new Error('Not found'))
-        }
-    }
+var resolver = new nmcpp.Resolver()
+var provider = new nmcpp.TestProvider({
+    resolver: resolver
 })
-
-var prov = new TestProvider(nmcpp, 'prov')
 
 /* Tests
 ============================================================================= */
@@ -37,7 +23,7 @@ var prov = new TestProvider(nmcpp, 'prov')
 describe('[0003] Data', function() {
 
     it('[0000] Invalid data type or non-json data', function(done) {
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit',
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit',
             "Hello",
             require('debug')('nmcpp:test-0003-0000'))
 
@@ -52,7 +38,7 @@ describe('[0003] Data', function() {
     })
 
     it('[0010] lookup("nonexistent")', function(done) {
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             ip: '1.2.3.4'
         }, require('debug')('nmcpp:test-0003-0010'))
 
@@ -67,7 +53,7 @@ describe('[0003] Data', function() {
     })
 
     it('[0020] lookup("ip.nonexistent.foo")', function(done) {
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             foo: {
                 bar: {
                     ip: '1.2.3.4'
@@ -86,7 +72,7 @@ describe('[0003] Data', function() {
     })
 
     it('[0040] lookup("ip")', function(done) {
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             ip: '1.2.3.4'
         }, require('debug')('nmcpp:test-0003-0040'))
 
@@ -105,7 +91,7 @@ describe('[0003] Data', function() {
     })
 
     it('[0060] lookup("ip.my")', function(done) {
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             my: {
                 ip: '1.2.3.4'
             }
@@ -127,8 +113,11 @@ describe('[0003] Data', function() {
 
     it('[0070] Empty list in delegation', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0070')
-        var prov = new TestProvider(resolver, 'bit', debug, {})
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [], debug)
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        })
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [], debug)
 
         data.find(new nmcpp.Session(), "www", function(err, result) {
             if (!err) {
@@ -141,8 +130,11 @@ describe('[0003] Data', function() {
 
     it('[0071] Non-string first parameter in delegation', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0071')
-        var prov = new TestProvider(resolver, 'bit', debug, {})
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        })
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [
             true
         ], debug)
 
@@ -157,7 +149,10 @@ describe('[0003] Data', function() {
 
     it('[0072] Non-string second parameter in delegation', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0072')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 map: {
                     www: {
@@ -166,7 +161,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [
             's/foo', true
         ], debug)
 
@@ -181,8 +176,11 @@ describe('[0003] Data', function() {
 
     it('[0080] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0080')
-        var prov = new TestProvider(resolver, 'bit', debug, {})
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        })
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             map: {
                 www: {
                     ip: '1.2.3.4'
@@ -208,8 +206,11 @@ describe('[0003] Data', function() {
 
     it('[0100] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0100')
-        var prov = new TestProvider(resolver, 'bit', debug, {})
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        })
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [
             's/nonexistent'
         ], debug)
 
@@ -224,7 +225,10 @@ describe('[0003] Data', function() {
 
     it('[0120] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0120')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 map: {
                     www: {
@@ -233,7 +237,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [
             's/foo'
         ], debug)
 
@@ -255,7 +259,10 @@ describe('[0003] Data', function() {
 
     it('[0140] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0140')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": ['s/bar'],
             "s/bar": ['s/baz'],
             "s/baz": {
@@ -266,7 +273,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [
             's/foo'
         ], debug)
 
@@ -288,7 +295,10 @@ describe('[0003] Data', function() {
 
     it('[0160] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0160')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 map: {
                     www: {
@@ -297,7 +307,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "delegate": ['s/foo']
         }, debug)
 
@@ -319,7 +329,10 @@ describe('[0003] Data', function() {
 
     it('[0180] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0180')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 "delegate": ['s/bar']
             },
@@ -334,7 +347,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "delegate": ['s/foo']
         }, debug)
 
@@ -356,7 +369,10 @@ describe('[0003] Data', function() {
 
     it('[0200] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0200')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 map: {
                     bar: {
@@ -369,7 +385,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "delegate": ['s/foo', 'bar']
         }, debug)
 
@@ -391,7 +407,10 @@ describe('[0003] Data', function() {
 
     it('[0220] find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0220')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 map: {
                     subdomain: {
@@ -408,7 +427,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "delegate": ['s/foo', 'bar.subdomain']
         }, debug)
 
@@ -430,12 +449,15 @@ describe('[0003] Data', function() {
 
     it('[0300] Invalid import parameter', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0300')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {
                 "import": 42
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', [
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [
             's/foo'
         ], debug)
 
@@ -450,7 +472,10 @@ describe('[0003] Data', function() {
 
     it('[0320] Simple import', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0320')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/bar": {
                 map: {
                     www: {
@@ -459,7 +484,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/bar"]
             ]
@@ -483,7 +508,10 @@ describe('[0003] Data', function() {
 
     it('[0340] Delegation in imported data', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0340')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/bar": {
                 "delegate": ["s/baz"]
             },
@@ -495,7 +523,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/bar"]
             ]
@@ -519,7 +547,10 @@ describe('[0003] Data', function() {
 
     it('[0360] Import to a "null" record', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0360')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {},
             "s/bar": {
                 map: {
@@ -547,7 +578,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/foo"],
                 ["s/bar"],
@@ -581,7 +612,10 @@ describe('[0003] Data', function() {
 
     it('[0380] Import to a "string" record', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0380')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {},
             "s/bar": {
                 map: {
@@ -608,7 +642,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/foo"],
                 ["s/bar"],
@@ -634,7 +668,10 @@ describe('[0003] Data', function() {
 
     it('[0400] Import to an "array" record', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0400')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {},
             "s/bar": {
                 map: {
@@ -661,7 +698,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/foo"],
                 ["s/bar"],
@@ -687,7 +724,10 @@ describe('[0003] Data', function() {
 
     it('[0420] Import to an "object" record', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0420')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/foo": {},
             "s/bar": {
                 map: {
@@ -724,7 +764,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/foo"],
                 ["s/bar"],
@@ -750,7 +790,10 @@ describe('[0003] Data', function() {
 
     it('[0440] Chain imports', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0440')
-        var prov = new TestProvider(resolver, 'bit', debug, {
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+            resolver: resolver
+        }, {
             "s/bar": {
                 "import": [
                     ["s/baz"]
@@ -769,7 +812,7 @@ describe('[0003] Data', function() {
                 }
             }
         })
-        var data = new nmcpp.DataHolder(prov, 'd/domain', 'domain.bit', {
+        var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', {
             "import": [
                 ["s/bar"]
             ]

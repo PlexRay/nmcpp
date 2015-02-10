@@ -11,20 +11,6 @@ var test = global.unitjs || require('unit.js'),
 var _ = require("underscore")
 var nmcpp = require('../lib/index.js')
 
-var Namecoin = nmcpp.Provider.extend({
-    init: function(debug, data) {
-        this.debug = debug
-        this.data = data
-    },
-    load: function(name, callback) {
-        if (this.data.hasOwnProperty(name)) {
-            callback(null, _.clone(this.data[name]))
-        } else {
-            return callback(new Error('Not found'))
-        }
-    }
-})
-
 /* Tests
 ============================================================================= */
 
@@ -32,7 +18,10 @@ describe('[0006] Alias', function() {
 
     it('[0000] find(["ip#us"], "domain.bit", done)', function(done) {
         try {
-            var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0006-0000'), {
+            var debug = require('debug')('nmcpp:test-0006-0000')
+            var provider = new nmcpp.TestProvider({
+                debug: debug
+            }, {
                 "d/domain": {
                     "ip": "8.8.8.8",
                     "map": {
@@ -45,7 +34,7 @@ describe('[0006] Alias', function() {
 
             nmcpp.resolve(["ip#us"], {
                 domain: "domain.bit",
-                debug: bit.debug
+                debug: debug
             }, function(err, results) {
                 if (err) { return done(err) }
                 
@@ -66,7 +55,10 @@ describe('[0006] Alias', function() {
 
     it('[0020] find(["ip#www.eu"], "domain.bit", done)', function(done) {
         try {
-            var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0006-0020'), {
+            var debug = require('debug')('nmcpp:test-0006-0020')
+            var provider = new nmcpp.TestProvider({
+                debug: debug
+            }, {
                 "d/domain": {
                     "ip": "8.8.8.8",
                     "map": {
@@ -87,7 +79,7 @@ describe('[0006] Alias', function() {
 
             nmcpp.resolve(["ip#www.eu"], {
                 domain: "domain.bit",
-                debug: bit.debug
+                debug: debug
             }, function(err, results) {
                 if (err) { return done(err) }
                 
@@ -108,7 +100,10 @@ describe('[0006] Alias', function() {
 
     it('[0040] find(["ip#www.eu"], "domain.bit", done)', function(done) {
         try {
-            var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0006-0040'), {
+            var debug = require('debug')('nmcpp:test-0006-0040')
+            var provider = new nmcpp.TestProvider({
+                debug: debug
+            }, {
                 "d/domain": {
                     "ip": "8.8.8.8",
                     "map": {
@@ -132,7 +127,7 @@ describe('[0006] Alias', function() {
 
             nmcpp.resolve(["ip#www.eu"], {
                 domain: "domain.bit",
-                debug: bit.debug
+                debug: debug
             }, function(err, results) {
                 if (err) { return done(err) }
                 
@@ -154,8 +149,10 @@ describe('[0006] Alias', function() {
     it('[0060] find(["ip#www.eu"], "domain.bit", done)', function(done) {
         try {
             var debug = require('debug')('nmcpp:test-0006-0060')
-
-            var bit = new Namecoin(nmcpp, 'bit', debug, {
+            var bit = new nmcpp.TestProvider({
+                debug: debug,
+                gtld: 'bit'
+            }, {
                 "d/domain": {
                     "ip": "8.8.8.8",
                     "map": {
@@ -174,7 +171,10 @@ describe('[0006] Alias', function() {
                 }
             })
 
-            var coin = new Namecoin(nmcpp, 'coin', debug, {
+            var coin = new nmcpp.TestProvider({
+                debug: debug,
+                gtld: 'coin'
+            }, {
                 "d/domain": {
                     "ip": "8.8.8.8",
                     "map": {
@@ -219,7 +219,11 @@ describe('[0006] Alias', function() {
 
     it('[0080] Circular aliases', function(done) {
         try {
-            var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0008-0080'), {
+            var debug = require('debug')('nmcpp:test-0006-0080')
+            var bit = new nmcpp.TestProvider({
+                debug: debug,
+                gtld: 'bit'
+            }, {
                 'd/domain': {
                     "ip": "8.8.8.8",
                     "map": {
@@ -264,7 +268,10 @@ describe('[0006] Alias', function() {
                 }
             })
 
-            var coin = new Namecoin(nmcpp, 'coin', require('debug')('nmcpp:test-0007-0000'), {
+            var coin = new nmcpp.TestProvider({
+                debug: debug,
+                gtld: 'coin'
+            }, {
                 'd/domain': {
                     "ip": "8.8.8.8",
                     "map": {
@@ -281,7 +288,7 @@ describe('[0006] Alias', function() {
 
             nmcpp.resolve(["ip#coin.eu"], {
                 domain: "domain.bit",
-                debug: bit.debug
+                debug: debug
             }, function(err, results) {
                 if (err) { return done(err) }
                 

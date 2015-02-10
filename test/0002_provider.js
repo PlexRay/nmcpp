@@ -16,9 +16,11 @@ var nmcpp = require('../lib/index.js')
 describe('[0002] Provider', function() {
 
     it('[0000] extendable', function(done) {
-        var Namecoin = nmcpp.Provider.extend({})
+        var MyProvider = nmcpp.Provider.extend({})
 
-        var bit = new Namecoin(nmcpp, 'bit')
+        var bit = new MyProvider({
+            debug: debug
+        })
 
         bit
             .should.be.an.instanceof(nmcpp.Provider)
@@ -27,14 +29,17 @@ describe('[0002] Provider', function() {
     })
 
     it('[0020] init() receives arguments', function(done) {
-        var Namecoin = nmcpp.Provider.extend({
-            init: function(debug, data) {
-                this.debug = debug
+        var debug = require('debug')('nmcpp:test-0002-0020')
+        
+        var MyProvider = nmcpp.Provider.extend({
+            init: function(opts, data) {
                 this.data = data
             }
         })
 
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0002-0020'), {
+        var bit = new MyProvider({
+            debug: debug
+        }, {
             'd/domain': {
                 ip: '1.2.3.4'
             }
@@ -49,32 +54,24 @@ describe('[0002] Provider', function() {
     })
 
     it('[0040] loadData() works', function(done) {
-        var Namecoin = nmcpp.Provider.extend({
-            init: function(debug, data) {
-                this.debug = debug
-                this.data = data
-            },
+        var debug = require('debug')('nmcpp:test-0002-0030')
+        
+        var MyProvider = nmcpp.Provider.extend({
             load: function(name, callback) {
-                if (this.data.hasOwnProperty(name)) {
-                    callback(null, this.data[name])
-                } else {
-                    return callback(new Error('Not found'))
-                }
+                callback(null, 'RESERVED')
             }
         })
 
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0002-0030'), {
-            'd/domain': {
-                ip: '1.2.3.4'
-            }
+        var bit = new MyProvider({
+            debug: debug
         })
-
+        
         bit.loadData('d/domain', 'bit', function(err, res) {
             if (err) {
                 return done(err)
             }
 
-            res.should.be.an.instanceof(Object)
+            res.should.be.an.instanceof(nmcpp.DataHolder)
 
             done()
         }, bit.debug)

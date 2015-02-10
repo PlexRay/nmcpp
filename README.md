@@ -37,7 +37,7 @@ Resolving `email` and `gpg fingerprint` fields at `www.domain.bit`
 ```js
 nmcpp.resolve('', {
     domain: 'www.domain.bit',
-    debug: debug('myapp')
+    debug: debug('myapp:resolve')
 }, function(err, res) {
     if (err) { return done(err) }
     
@@ -58,51 +58,44 @@ nmcpp.resolve('', {
 
 ### Example Data Providers
 
-Namecoin wallet data provider using the [namecoin](https://www.npmjs.com/package/namecoin) client library:
+Namecoin wallet data provider using the [namecoin](https://www.npmjs.com/package/namecoin)
+client library:
 ```js
 var namecoin = require('namecoin');
-var client = new namecoin.Client({/*Options*/});
 
 var NamecoinWalletProvider = nmcpp.Provider.extend({
+    init: function(opts) {
+        this.client = new namecoin.Client(opts.wallet || {})
+    },
     load: function(name, callback) {
-        client.cmd('name_show', name, function(err, result) {
+        this.client.cmd('name_show', name, function(err, result) {
             if (err) { return callback(new Error(err)); }
             return nmcpp.parseNameData(result.value, callback);
         });
     }
 });
 
-new NamecoinWalletProvider(nmcpp, 'bit');
+new NamecoinWalletProvider({
+    wallet: {
+        host: 'localhost', port: 8336, user: 'username', pass: 'password'
+    }
+});
 ```
 
-Web based Public API data provider with multiple gTLD support:
+Web based Public API data provider:
 ```js
 var httpRequest = require('request');
 var urljoin = require('url-join');
 
-var NamecoinDNSChainProvider = nmcpp.Provider.extend({
-    init: function(addr, transform) {
-        this.addr = addr;
-        this.transform = transform || function(name) {
-            return name
-        };
+var DNSChainProvider = nmcpp.Provider.extend({
+    init: function(opts) {
+        this.addr = opts.addr;
     }, 
-    normalize: function(name, type) {
-        type = type || 'd';
-        if (name.indexOf('/') < 0) {
-            return (type + '/' + this.transform(name));
-        }
-        return name;
-    },
     load: function(name, callback) {
-        var self = this;
-        var url = urljoin(self.addr, name);
         httpRequest({
             method: 'GET',
-            url: url,
-            headers: {
-                'Accept': 'application/json'
-            }
+            url: urljoin(this.addr, name),
+            headers: { 'Accept': 'application/json' }
         }, function(error, response, body) {
             if (error || response.statusCode != 200) {
                 return callback(new Error(error || response.statusCode));
@@ -112,14 +105,27 @@ var NamecoinDNSChainProvider = nmcpp.Provider.extend({
     }
 });
 
-var addr = 'https://dnschain.info/bit/';
-
-// .bit gTLD (default name transformation function)
-new NamecoinDNSChainProvider(nmcpp, addr);
-// .plex gTLD (custom name transformation function)
-new NamecoinDNSChainProvider(nmcpp, addr, function(name) {
-    return 'plex-net-' + name
+new DNSChainProvider({
+    addr: 'https://dnschain.info/bit/'
 });
+```
+
+Multiple gTLD support:
+```js
+// .bit gTLD (default name transformation function)
+new NamecoinWalletProvider();
+// .plex gTLD (custom name transformation function)
+new NamecoinWalletProvider({
+    gtld: 'plex'
+    transform: function(name) {
+        return 'plex-net-' + name
+    }
+});
+
+nmcpp.resolve('ip#hello.plex',
+function(err, res) {
+    console.log('ip:', res.data)
+})
 ```
 
 ### Documentation

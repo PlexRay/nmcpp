@@ -8,24 +8,9 @@ var test = global.unitjs || require('unit.js'),
 
 var _ = require("underscore")
 var async = require('async')
+var punycode = require('punycode')
 
 var nmcpp = require('../lib/index.js')
-
-var Namecoin = nmcpp.Provider.extend({
-    init: function(debug, data) {
-        this.debug = debug
-        this.data = data
-    },
-    load: function(name, callback) {
-        if (this.data.hasOwnProperty(name)) {
-            this.debug('Returning data...')
-            callback(null, _.clone(this.data[name]))
-        } else {
-            this.debug('Returning not found...')
-            return callback(new Error('Not found'))
-        }
-    }
-})
 
 /* Tests
 ============================================================================= */
@@ -33,7 +18,10 @@ var Namecoin = nmcpp.Provider.extend({
 describe('[0004] Find', function() {
 
     it('[0000] find("nonexistent", "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0000'), {
+        var debug = require('debug')('nmcpp:test-0004-0000')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1"
             }
@@ -41,7 +29,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["nonexistent"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
 
@@ -57,7 +45,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0020] find("ip", "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0020'), {
+        var debug = require('debug')('nmcpp:test-0004-0020')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1"
             }
@@ -65,7 +56,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["ip"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -81,7 +72,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0040] find(["ip", "ip6"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0040'), {
+        var debug = require('debug')('nmcpp:test-0004-0040')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "ip6": "::1",
@@ -90,7 +84,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["ip", "ip6"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -109,7 +103,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0060] find("ip", "www.domain", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0060'), {
+        var debug = require('debug')('nmcpp:test-0004-0060')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "map": {
                     "www": {
@@ -121,7 +118,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["ip"], {
             domain: "www.domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -138,7 +135,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0080] find("ip", "www.dev.domain", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0080'), {
+        var debug = require('debug')('nmcpp:test-0004-0080')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "map": {
                     "dev": {
@@ -154,7 +154,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["ip"], {
             domain: "www.dev.domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -171,7 +171,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0100] find(["ip#www", "ip6#ftp"], "dev.domain", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0100'), {
+        var debug = require('debug')('nmcpp:test-0004-0100')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "map": {
                     "dev": {
@@ -192,7 +195,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["ip#www", "ip6#ftp"], {
             domain: "dev.domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -213,7 +216,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0120] find("gpg.fpr", "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0120'), {
+        var debug = require('debug')('nmcpp:test-0004-0120')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "gpg": {
                     "fpr": "78F11E68E8415BE8F74AAF2F9EE84CF88C6D1D6B"
@@ -223,7 +229,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve(["fpr.gpg"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             
             if (err) { return done(err) }
@@ -241,7 +247,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0140] find("", "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0140'), {
+        var debug = require('debug')('nmcpp:test-0004-0140')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "email": "alice@example.com"
             }
@@ -249,7 +258,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve([""], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -272,7 +281,10 @@ describe('[0004] Find', function() {
     })
 
     it('[0160] find("", "www.domain", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0004-0160'), {
+        var debug = require('debug')('nmcpp:test-0004-0160')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "map": {
                     "www": {
@@ -284,7 +296,7 @@ describe('[0004] Find', function() {
 
         nmcpp.resolve([""], {
             domain: "www.domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
