@@ -1,10 +1,9 @@
 [![build status](https://travis-ci.org/PlexRay/nmcpp.svg)](https://travis-ci.org/PlexRay/nmcpp)
 [![unit tests](https://img.shields.io/badge/unit%20tests-passing-brightgreen.svg)](https://dnschain.info/_s/nmcpp/mocha/)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PlexRay/nmcpp/master/LICENSE)
+[![Join the chat at https://gitter.im/PlexRay/nmcpp](https://img.shields.io/badge/gitter-join%20chat-orange.svg)](https://gitter.im/PlexRay/nmcpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Namecoin Data Processing Library
-
-[![Join the chat at https://gitter.im/PlexRay/nmcpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PlexRay/nmcpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Namecoin Data Processor Library allows to simplify access to the 
 [Namecoin](http://namecoin.info), as well as other Namecoin data
