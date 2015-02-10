@@ -4,6 +4,8 @@
 
 ## Namecoin Data Processing Library
 
+[![Join the chat at https://gitter.im/PlexRay/nmcpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PlexRay/nmcpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The Namecoin Data Processor Library allows to simplify access to the 
 [Namecoin](http://namecoin.info), as well as other Namecoin data
 providers. It was developed primarily for the Namecoin access, but has been 
