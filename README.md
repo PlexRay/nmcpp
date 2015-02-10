@@ -1,12 +1,13 @@
 [![build status](https://travis-ci.org/PlexRay/nmcpp.svg)](https://travis-ci.org/PlexRay/nmcpp)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PlexRay/nmcpp/master/LICENSE)
 
 ## Namecoin Data Processing Library
 
 The Namecoin Data Processor Library allows to simplify access to the 
-[Namecoin] (http://namecoin.info), as well as other [Namecoin Data] (NameData) 
+[Namecoin](http://namecoin.info), as well as other Namecoin data
 providers. It was developed primarily for the Namecoin access, but has been 
 extended to support any data provider whose data conforms 
-[Namecoin Data specifications] (http://dot-bit.org/Namespace:Domain_names_v2.0). 
+[Namecoin Data specifications](http://dot-bit.org/Namespace:Domain_names_v2.0). 
 The library supports imports, delegates, aliasing and other features of the Namecoin Data, 
 cross-references between Data Providers. The library discovers data inconsistency, 
 including circular references.
@@ -52,7 +53,7 @@ nmcpp.resolve('', {
 
 ### Documentation
 
-For more information see: [https://dnschain.info/] (https://dnschain.info/)
+For more information see: [https://dnschain.info/](https://dnschain.info/)
 
 ### The MIT License (MIT)
 
