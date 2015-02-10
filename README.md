@@ -1,4 +1,5 @@
 [![build status](https://travis-ci.org/PlexRay/nmcpp.svg)](https://travis-ci.org/PlexRay/nmcpp)
+[![unit tests](https://img.shields.io/badge/unit%20tests-passing-brightgreen.svg)](https://dnschain.info/_s/nmcpp/mocha/)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PlexRay/nmcpp/master/LICENSE)
 
 ## Namecoin Data Processing Library
