@@ -43,9 +43,7 @@ describe('[0090] Examples', function() {
             }
         })
 
-        nmcpp.resolve('ip#www.domain.bit', {
-            debug: bit.debug
-        }, function(err, res) {
+        nmcpp.resolve('ip#www.domain.bit', function(err, res) {
             if (err) { return done(err) }
             
             res.data.should.be.equal('1.2.3.4')

@@ -1,7 +1,7 @@
 {
     "name": "nmcpp",
     "description": "Namecoin Data Processing Library",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "private": false,
     "main": "./lib/index.js",
     "author": {
@@ -33,12 +33,12 @@
         "grunt": "^0.4",
         "grunt-browserify": "^3.3",
         "grunt-cli": "^0.1",
-        "grunt-contrib-jshint": "^0.10",
-        "grunt-contrib-uglify": "^0.6",
+        "grunt-contrib-jshint": "^0.11",
+        "grunt-contrib-uglify": "^0.7",
         "grunt-contrib-watch": "^0.6",
-        "grunt-force": "^1.0",
         "grunt-simple-mocha": "^0.4",
-        "load-grunt-tasks": "^1.0",
+        "load-grunt-tasks": "^3.1",
+        "grunt-force": "^1.0",
         "mocha": "^2.1",
         "unit.js": "^1.1"
     },
