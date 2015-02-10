@@ -16,6 +16,7 @@ including circular references.
 
 ### Quick Examples
 
+Resolving `IPv4` address at `www.domain.bit`
 ```js
 nmcpp.resolve('ip#www.domain.bit',
 function(err, res) {
@@ -23,14 +24,16 @@ function(err, res) {
 })
 ```
 
+Same as above
 ```js
-nmcpp.resolve('ip#www', {
-    domain: 'domain.bit'
+nmcpp.resolve('ip', {
+    domain: 'www.domain.bit'
 }, function(err, res) {
     console.log('ip:', res.data)
 })
 ```
 
+Resolving `email` and `gpg fingerprint` fields at `www.domain.bit`
 ```js
 nmcpp.resolve('', {
     domain: 'www.domain.bit',
@@ -55,7 +58,7 @@ nmcpp.resolve('', {
 
 ### Example Data Providers
 
-#### Namecoin wallet data provider using the [namecoin](https://www.npmjs.com/package/namecoin) client library:
+Namecoin wallet data provider using the [namecoin](https://www.npmjs.com/package/namecoin) client library:
 ```js
 var namecoin = require('namecoin');
 var client = new namecoin.Client({/*Options*/});
@@ -72,8 +75,7 @@ var NamecoinWalletProvider = nmcpp.Provider.extend({
 new NamecoinWalletProvider(nmcpp, 'bit');
 ```
 
-#### [dnschain.info](https://dnschain.info/#/bit/d/dnschaininfo) public API based data provider with multiple gTLD support:
-
+Web based Public API data provider with multiple gTLD support:
 ```js
 var httpRequest = require('request');
 var urljoin = require('url-join');
