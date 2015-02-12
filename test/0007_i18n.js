@@ -16,7 +16,7 @@ var nmcpp = require('../lib/index.js')
 
 describe('[0007] i18n', function() {
 
-    it('[0180] is supported', function(done) {
+    it('[0000] is supported', function(done) {
         var debug = require('debug')('nmcpp:test-0007-0000')
         var provider = new nmcpp.TestProvider({
             debug: debug
