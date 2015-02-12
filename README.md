@@ -23,6 +23,10 @@ function(err, res) {
 })
 ```
 
+### Tests
+
+[Online Unit Tests](https://dnschain.info/_s/nmcpp/mocha/)
+
 ### Documentation
 
 For more information see: [https://dnschain.info/](https://dnschain.info/)
