@@ -38,10 +38,10 @@ new nmcpp.TestProvider({
 });
 
 (async function() {
-    var ip = await nmcpp.resolveAsync('fpr.gpg', {
+    var fpr = await nmcpp.resolveAsync('fpr.gpg', {
         domain: 'example.coin'
     });
-    console.log(ip);
+    console.log(fpr.data);
 }())
 ```
 
