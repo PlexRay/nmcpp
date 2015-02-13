@@ -18,13 +18,13 @@ including circular references.
 ####Resolving `IPv4` address at `www.domain.bit`
 ```js
 nmcpp.resolve('ip#www.domain.bit', function(err, res) {
-    console.log('ip:', res.data)
-})
+    console.log('ip:', res.data);
+});
 ```
 
 #### ES7
 ```js
-import nmcpp from './lib/index.js';
+import nmcpp from 'nmcpp';
 
 new nmcpp.TestProvider({
     gtld: 'coin',
@@ -40,8 +40,8 @@ new nmcpp.TestProvider({
 (async function() {
     var ip = await nmcpp.resolveAsync('fpr.gpg', {
         domain: 'example.coin'
-    })
-    console.log(ip)
+    });
+    console.log(ip);
 }())
 ```
 
