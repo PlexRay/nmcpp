@@ -15,7 +15,8 @@ including circular references.
 
 ### Quick Example
 
-####Resolving `IPv4` address at `www.domain.bit`
+#### ES5
+Resolving `IPv4` address at `www.domain.bit`
 ```js
 nmcpp.resolve('ip#www.domain.bit', function(err, res) {
     console.log('ip:', res.data);
@@ -23,6 +24,7 @@ nmcpp.resolve('ip#www.domain.bit', function(err, res) {
 ```
 
 #### ES7
+Resolving `GPG Fingerprint` at `example.coin`
 ```js
 import nmcpp from 'nmcpp';
 
