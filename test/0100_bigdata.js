@@ -8,16 +8,16 @@ var debug = require('debug')('nmcpp:test-0100')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var nmcpp = require('../lib/index.js')
 
 /* Data
 ============================================================================= */
 
 var DelegatesProvider = nmcpp.Provider.extend({
-    init: function(debug, max) {
-        this.debug = debug
-
+    init: function(opts) {
+        var max = opts.count
+        
         this.debug('Creating testdata with %s delegates', max)
 
         this.names = {}
@@ -54,12 +54,12 @@ var DelegatesProvider = nmcpp.Provider.extend({
 })
 
 var ImportsProvider = nmcpp.Provider.extend({
-    init: function(debug, max, fn) {
-        fn = fn || function(value) {
+    init: function(opts) {
+        var max = opts.count
+        
+        var fn = opts.fn || function(value) {
             return [value]
         }
-
-        this.debug = debug
 
         this.debug('Creating testdata with %s delegates', max)
 
@@ -104,7 +104,10 @@ describe('[0100] Bigdata', function() {
         try {
             var debug = require('debug')('nmcpp:test-0100-0000')
 
-            new DelegatesProvider(nmcpp, 'bit', debug, 1000)
+            new DelegatesProvider({
+                debug: debug,
+                count: 1000
+            })
 
             nmcpp.resolve("ip#ftp", {
                 domain: 'bigdata.bit',
@@ -128,7 +131,10 @@ describe('[0100] Bigdata', function() {
         try {
             var debug = require('debug')('nmcpp:test-0100-0020')
 
-            new DelegatesProvider(nmcpp, 'bit', debug, 5000)
+            new DelegatesProvider({
+                debug: debug,
+                count: 5000
+            })
 
             nmcpp.resolve("ip#ftp", {
                 domain: 'bigdata.bit',
@@ -152,10 +158,13 @@ describe('[0100] Bigdata', function() {
         try {
             var debug = require('debug')('nmcpp:test-0100-0040')
 
-            new ImportsProvider(nmcpp, 'bit', debug, 1000,
-                function(value) {
+            new ImportsProvider({
+                debug: debug,
+                count: 1000,
+                fn: function(value) {
                     return value
-                })
+                }
+            })
 
             nmcpp.resolve("text", {
                 domain: 'bigdata.bit',
@@ -177,10 +186,13 @@ describe('[0100] Bigdata', function() {
         try {
             var debug = require('debug')('nmcpp:test-0100-0060')
 
-            new ImportsProvider(nmcpp, 'bit', debug, 5000,
-                function(value) {
+            new ImportsProvider({
+                debug: debug,
+                count: 5000,
+                fn: function(value) {
                     return value
-                })
+                }
+            })
 
             nmcpp.resolve("text", {
                 domain: 'bigdata.bit',

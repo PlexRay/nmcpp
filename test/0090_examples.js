@@ -6,26 +6,10 @@
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var async = require('async')
 
 var nmcpp = require('../lib/index.js')
-
-var Namecoin = nmcpp.Provider.extend({
-    init: function(debug, data) {
-        this.debug = debug
-        this.data = data
-    },
-    load: function(name, callback) {
-        if (this.data.hasOwnProperty(name)) {
-            this.debug('Returning data...')
-            callback(null, _.clone(this.data[name]))
-        } else {
-            this.debug('Returning not found...')
-            return callback(new Error('Not found'))
-        }
-    }
-})
 
 /* Tests
 ============================================================================= */
@@ -33,7 +17,12 @@ var Namecoin = nmcpp.Provider.extend({
 describe('[0090] Examples', function() {
 
     it('[0000] Simple resolving', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0000'), {
+        var debug = require('debug')('nmcpp:test-0090-0000')
+
+        var bit = new nmcpp.TestProvider({
+            debug: debug,
+            gtld: 'bit'
+        }, {
             "d/domain": {
                 "map": {
                     "www": {
@@ -53,7 +42,12 @@ describe('[0090] Examples', function() {
     })
     
     it('[0020] Simple resolving with custom options', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0020'), {
+        var debug = require('debug')('nmcpp:test-0090-0020')
+        
+        var bit = new nmcpp.TestProvider({
+            debug: debug,
+            gtld: 'bit'
+        }, {
             "d/domain": {
                 "map": {
                     "www": {
@@ -65,7 +59,7 @@ describe('[0090] Examples', function() {
 
         nmcpp.resolve('ip', {
             domain: "www.domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, res) {
             if (err) { return done(err) }
             
@@ -75,8 +69,13 @@ describe('[0090] Examples', function() {
         })
     })
     
-    it('[0090] Resolve a domain + access data directly', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0000'), {
+    it('[0040] Resolve a domain + access data directly', function(done) {
+        var debug = require('debug')('nmcpp:test-0090-0040')
+
+        var bit = new nmcpp.TestProvider({
+            debug: debug,
+            gtld: 'bit'
+        }, {
             "d/domain": {
                 "map": {
                     "www": {
@@ -88,7 +87,7 @@ describe('[0090] Examples', function() {
 
         nmcpp.resolve('', {
             domain: "www.domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, res) {
             if (err) { return done(err) }
 
@@ -104,8 +103,13 @@ describe('[0090] Examples', function() {
         })
     })
     
-    it('[0100] Resolve a domain + lookup several records', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0090-0100'), {
+    it('[0060] Resolve a domain + lookup several records', function(done) {
+        var debug = require('debug')('nmcpp:test-0090-0060')
+
+        var bit = new nmcpp.TestProvider({
+            debug: debug,
+            gtld: 'bit'
+        }, {
             "d/domain": {
                 "map": {
                     "www": {
@@ -120,7 +124,7 @@ describe('[0090] Examples', function() {
 
         nmcpp.resolve('', {
             domain: 'www.domain.bit',
-            debug: bit.debug
+            debug: debug
         }, function(err, res) {
             if (err) { return done(err) }
             

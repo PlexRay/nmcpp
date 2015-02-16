@@ -8,22 +8,8 @@ var debug = require('debug')('nmcpp:test-0004')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var nmcpp = require('../lib/index.js')
-
-var Namecoin = nmcpp.Provider.extend({
-    init: function(debug, data) {
-        this.debug = debug
-        this.data = data
-    },
-    load: function(name, callback) {
-        if (this.data.hasOwnProperty(name)) {
-            callback(null, _.clone(this.data[name]))
-        } else {
-            return callback(new Error('Not found'))
-        }
-    }
-})
 
 /* Tests
 ============================================================================= */
@@ -31,7 +17,10 @@ var Namecoin = nmcpp.Provider.extend({
 describe('[0005] Delegation', function() {
 
     it('[0000] find(["ip#ftp"], "foo", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0000'), {
+        var debug = require('debug')('nmcpp:test-0005-0000')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "map": {
@@ -45,7 +34,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip#ftp"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -62,7 +51,10 @@ describe('[0005] Delegation', function() {
     })
 
     it('[0020] find(["ip#ftp"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0020'), {
+        var debug = require('debug')('nmcpp:test-0005-0020')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "map": {
@@ -81,7 +73,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip#ftp"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -98,7 +90,10 @@ describe('[0005] Delegation', function() {
     })
 
     it('[0040] find(["ip.v4#ftp"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0040'), {
+        var debug = require('debug')('nmcpp:test-0005-0040')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "map": {
@@ -119,7 +114,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip.v4#ftp"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -136,7 +131,10 @@ describe('[0005] Delegation', function() {
     })
 
     it('[0060] find(["ip6.v6#ftp"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0060'), {
+        var debug = require('debug')('nmcpp:test-0005-0060')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "map": {
                     "ftp": ['s/foo', 'bar']
@@ -160,7 +158,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip6.v6#ftp"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -177,7 +175,10 @@ describe('[0005] Delegation', function() {
     })
 
     it('[0080] find(["ip", "ip#ftp", "ip6#ftp"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0080'), {
+        var debug = require('debug')('nmcpp:test-0005-0080')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "map": {
@@ -191,7 +192,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip", "ip#ftp"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -212,7 +213,10 @@ describe('[0005] Delegation', function() {
     })
 
     it('[0100] find(["ip", "ip#www", "ip6#www"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0100'), {
+        var debug = require('debug')('nmcpp:test-0005-0100')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "map": {
@@ -230,7 +234,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip", "ip#www"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             
@@ -251,7 +255,10 @@ describe('[0005] Delegation', function() {
     })
 
     it('[0120] find(["ip", "ip#ftp", "ip#www"], "domain.bit", done)', function(done) {
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0005-0120'), {
+        var debug = require('debug')('nmcpp:test-0005-0120')
+        var provider = new nmcpp.TestProvider({
+            debug: debug
+        }, {
             "d/domain": {
                 "ip": "127.0.0.1",
                 "map": {
@@ -275,7 +282,7 @@ describe('[0005] Delegation', function() {
 
         nmcpp.resolve(["ip", "ip#ftp", "ip#www"], {
             domain: "domain.bit",
-            debug: bit.debug
+            debug: debug
         }, function(err, results) {
             if (err) { return done(err) }
             

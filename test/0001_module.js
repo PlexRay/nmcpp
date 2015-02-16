@@ -17,6 +17,8 @@ describe('[0001] Module', function() {
 
         nmcpp
             .should.be.an.instanceOf(Object)
+        nmcpp
+            .should.be.an.instanceOf(nmcpp.Resolver)
 
         done()
     })

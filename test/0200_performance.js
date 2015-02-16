@@ -8,7 +8,7 @@ var debug = require('debug')('nmcpp:test-0003')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var async = require('async')
 var nmcpp = require('../lib/index.js')
 
@@ -59,7 +59,11 @@ describe('[0200] Performance', function() {
     it('[0020] find(["ip"], "domain.bit", done) // 10k', function(done) {
         this.timeout(defaultTimeout)
 
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0200-0020'), {
+        var debug = require('debug')('nmcpp:test-0200-0020')
+
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+        }, {
             "d/domain": {
                 "ip": "8.8.8.8",
                 "map": {
@@ -78,7 +82,7 @@ describe('[0200] Performance', function() {
             function(callback) {
                 nmcpp.resolve("ip", {
                     domain: 'domain.bit',
-                    debug: bit.debug
+                    debug: debug
                 }, function(err, res) {
                     if (err) { return callback(err) }
                     count--;
@@ -94,7 +98,11 @@ describe('[0200] Performance', function() {
     it('[0040] find(["ip"], "www.eu.domain.bit", done) // 10k', function(done) {
         this.timeout(defaultTimeout)
 
-        var bit = new Namecoin(nmcpp, 'bit', require('debug')('nmcpp:test-0200-0020'), {
+        var debug = require('debug')('nmcpp:test-0200-0040')
+        
+        var provider = new nmcpp.TestProvider({
+            debug: debug,
+        }, {
             "d/domain": {
                 "ip": "8.8.8.8",
                 "map": {
@@ -129,7 +137,7 @@ describe('[0200] Performance', function() {
             function(callback) {
                 nmcpp.resolve("ip", {
                     domain: 'www.eu.domain.bit',
-                    debug: bit.debug
+                    debug: debug
                 }, function(err, res) {
                     if (err) { return callback(err) }
                     count--;
