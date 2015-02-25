@@ -33,9 +33,7 @@ describe('[0003] Data', function() {
 
         data.lookup("nonexistent", function(err, result) {
             err
-                .should.be.type('string')
-            err
-                .should.equal('nonexistent')
+                .should.be.instanceof(Error)
 
             done()
         })
