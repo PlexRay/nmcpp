@@ -8,7 +8,7 @@ var debug = require('debug')('nmcpp:test-0003')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var async = require('async')
 var nmcpp = require('../lib/index.js')
 
@@ -35,6 +35,10 @@ var defaultTimeout = 2 * 60 * 1000
 ============================================================================= */
 
 describe('[0200] Performance', function() {
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
 
     it('[0000] Empty async loop // 100k', function(done) {
         this.timeout(defaultTimeout)
@@ -45,7 +49,7 @@ describe('[0200] Performance', function() {
                 return count > 0
             },
             function(callback) {
-                nmcpp.nextTick(function() {
+                setImmediate(function() {
                     count--;
                     callback()
                 })

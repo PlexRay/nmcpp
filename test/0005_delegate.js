@@ -8,13 +8,17 @@ var debug = require('debug')('nmcpp:test-0004')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var nmcpp = require('../lib/index.js')
 
 /* Tests
 ============================================================================= */
 
 describe('[0005] Delegation', function() {
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
 
     it('[0000] find(["ip#ftp"], "foo", done)', function(done) {
         var debug = require('debug')('nmcpp:test-0005-0000')

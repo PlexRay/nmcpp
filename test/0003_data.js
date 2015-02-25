@@ -6,7 +6,7 @@
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var nmcpp = require('../lib/index.js')
 
 /* Tests
@@ -21,7 +21,11 @@ var provider = new nmcpp.TestProvider({
 ============================================================================= */
 
 describe('[0003] Data', function() {
-
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
+    
     it('[0000] Invalid data type or non-json data', function(done) {
         var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit',
             "Hello",
@@ -119,7 +123,7 @@ describe('[0003] Data', function() {
         })
         var data = new nmcpp.DataHolder(provider, 'd/domain', 'domain.bit', [], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (!err) {
                 return done(new Error('Must fail'))
             }
@@ -138,7 +142,7 @@ describe('[0003] Data', function() {
             true
         ], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (!err) {
                 return done(new Error('Must fail'))
             }
@@ -165,7 +169,7 @@ describe('[0003] Data', function() {
             's/foo', true
         ], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (!err) {
                 return done(new Error('Must fail'))
             }
@@ -174,7 +178,7 @@ describe('[0003] Data', function() {
         })
     })
 
-    it('[0080] find("www")', function(done) {
+    it('[0080] find(find("www")', function(done) {
         var debug = require('debug')('nmcpp:test-0003-0080')
         var provider = new nmcpp.TestProvider({
             debug: debug,
@@ -188,7 +192,7 @@ describe('[0003] Data', function() {
             }
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -214,7 +218,7 @@ describe('[0003] Data', function() {
             's/nonexistent'
         ], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (!err) {
                 return done(new Error('Must fail'))
             }
@@ -241,7 +245,7 @@ describe('[0003] Data', function() {
             's/foo'
         ], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -277,7 +281,7 @@ describe('[0003] Data', function() {
             's/foo'
         ], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -311,7 +315,7 @@ describe('[0003] Data', function() {
             "delegate": ['s/foo']
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -351,7 +355,7 @@ describe('[0003] Data', function() {
             "delegate": ['s/foo']
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -389,7 +393,7 @@ describe('[0003] Data', function() {
             "delegate": ['s/foo', 'bar']
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -431,7 +435,7 @@ describe('[0003] Data', function() {
             "delegate": ['s/foo', 'bar.subdomain']
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -461,7 +465,7 @@ describe('[0003] Data', function() {
             's/foo'
         ], debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (!err) {
                 return done(new Error('Must fail'))
             }
@@ -490,7 +494,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -529,7 +533,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -586,7 +590,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -650,7 +654,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -706,7 +710,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -772,7 +776,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }
@@ -818,7 +822,7 @@ describe('[0003] Data', function() {
             ]
         }, debug)
 
-        data.find(new nmcpp.Session(), "www", function(err, result) {
+        data.resolve("www", function(err, result) {
             if (err) {
                 return done(err)
             }

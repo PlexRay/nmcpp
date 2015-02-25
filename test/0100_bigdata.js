@@ -8,7 +8,7 @@ var debug = require('debug')('nmcpp:test-0100')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var nmcpp = require('../lib/index.js')
 
 /* Data
@@ -98,6 +98,10 @@ var ImportsProvider = nmcpp.Provider.extend({
 ============================================================================= */
 
 describe('[0100] Bigdata', function() {
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
 
     it('[0000] 1k delegates', function(done) {
         this.timeout(60 * 500)

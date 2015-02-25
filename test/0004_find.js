@@ -6,7 +6,7 @@
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var async = require('async')
 var punycode = require('punycode')
 
@@ -16,6 +16,10 @@ var nmcpp = require('../lib/index.js')
 ============================================================================= */
 
 describe('[0004] Find', function() {
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
 
     it('[0000] find("nonexistent", "domain.bit", done)', function(done) {
         var debug = require('debug')('nmcpp:test-0004-0000')

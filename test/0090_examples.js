@@ -6,7 +6,7 @@
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var async = require('async')
 
 var nmcpp = require('../lib/index.js')
@@ -15,6 +15,10 @@ var nmcpp = require('../lib/index.js')
 ============================================================================= */
 
 describe('[0090] Examples', function() {
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
 
     it('[0000] Simple resolving', function(done) {
         var debug = require('debug')('nmcpp:test-0090-0000')

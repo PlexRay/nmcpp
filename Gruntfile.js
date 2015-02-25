@@ -35,26 +35,16 @@ module.exports = function(grunt) {
 
         browserify: {
             options: {
-                transform: ['brfs']
+                transform: ['brfs', 'browserify-shim']
             },
-            nmcppr: {
+            nmcpp: {
                 options: {
                     browserifyOptions: {
                         debug: true
                     }
                 },
                 files: {
-                    "<%= dirs.tmp %>/browser/nmcpp.js": ["./lib/nmcpp.js"]
-                }
-            },
-            nmcppd: {
-                options: {
-                    browserifyOptions: {
-                        debug: true
-                    }
-                },
-                files: {
-                    "<%= dirs.tmp %>/mocha/nmcpp.js": ["./lib/nmcpp.js"]
+                    "<%= dirs.tmp %>/browser/nmcpp.js": ["./lib/index.js"]
                 }
             },
             tests: {

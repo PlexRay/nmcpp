@@ -8,13 +8,17 @@ var debug = require('debug')('nmcpp:test-0003')
 var test = global.unitjs || require('unit.js'),
     should = test.should
 
-var _ = require("underscore")
+var _ = require("lodash")
 var nmcpp = require('../lib/index.js')
 
 /* Tests
 ============================================================================= */
 
 describe('[0006] Alias', function() {
+    beforeEach(function(done) {
+        nmcpp.cleanup()
+        done()
+    });
 
     it('[0000] find(["ip#us"], "domain.bit", done)', function(done) {
         try {
@@ -217,9 +221,38 @@ describe('[0006] Alias', function() {
         }
     })
 
-    it('[0080] Circular aliases', function(done) {
+    it('[0080] Local circular aliases', function(done) {
         try {
             var debug = require('debug')('nmcpp:test-0006-0080')
+            var provider = new nmcpp.TestProvider({
+                debug: debug
+            }, {
+                "d/domain": {
+                    "ip": "8.8.8.8",
+                    "map": {
+                        "*": {
+                            "alias": "ftp.@"
+                        }
+                    }
+                }
+            })
+
+            nmcpp.resolve("ip#us", {
+                domain: "domain.bit",
+                debug: debug
+            }, function(err, res) {
+                if (!err) { return done(new Error('Must fail')) }
+                
+                done()
+            })
+        } catch (exc) {
+            done(exc)
+        }
+    })
+
+    it('[0100] Foreign circular aliases', function(done) {
+        try {
+            var debug = require('debug')('nmcpp:test-0006-0100')
             var bit = new nmcpp.TestProvider({
                 debug: debug,
                 gtld: 'bit'
