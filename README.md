@@ -13,7 +13,7 @@ The library supports imports, delegates, aliasing and other features of the Name
 cross-references between Data Providers. The library discovers data inconsistency, 
 including circular references.
 
-### Quick Example
+### Quick Examples
 
 #### ES5
 Resolving `IPv4` address at `www.domain.bit`

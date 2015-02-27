@@ -49,7 +49,7 @@ describe('[0200] Performance', function() {
                 return count > 0
             },
             function(callback) {
-                setImmediate(function() {
+                nmcpp.nextTick(function() {
                     count--;
                     callback()
                 })
