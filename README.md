@@ -49,7 +49,12 @@ new nmcpp.TestProvider({
 
 ### Tests
 
-[Online Unit Tests](https://dnschain.info/_s/nmcpp/mocha/)
+* [Online Unit Tests](https://dnschain.info/_s/nmcpp/mocha/)
+
+### Hign-level Libraries & Examples
+
+* [Namecoin Resolving Library](https://www.npmjs.com/package/nmcns)
+* [Simple DNS Server](https://github.com/PlexRay/nmcns-simple-server)
 
 ### Documentation
 
