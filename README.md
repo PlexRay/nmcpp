@@ -4,11 +4,8 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PlexRay/nmcpp/master/LICENSE)
 [![Join the chat at https://gitter.im/PlexRay/nmcpp](https://img.shields.io/badge/gitter-join%20chat-orange.svg)](https://gitter.im/PlexRay/nmcpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The Namecoin Data Processor Library allows to simplify access to the 
-[Namecoin](http://namecoin.info), as well as other Namecoin data
-providers. It was developed primarily for the Namecoin access, but has been 
-extended to support any data provider whose data conforms 
-[Namecoin Data specifications](http://dot-bit.org/Namespace:Domain_names_v2.0). 
+The Namecoin Data Processing Library allows to simplify access the 
+[Namecoin](http://namecoin.info) data using custom data providers.
 The library supports imports, delegates, aliasing and other features of the Namecoin Data, 
 cross-references between Data Providers. The library discovers data inconsistency, 
 including circular references.
