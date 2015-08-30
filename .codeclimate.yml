@@ -1,0 +1,6 @@
+languages:
+  JavaScript: true
+exclude_paths:
+- "mocha/mocha.js"
+- "mocha/tests.js"
+- "mocha/unit.js"
